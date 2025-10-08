@@ -4,9 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Talk to Kite AI 🪁</title>
-<meta name="description" content="Interactive Talk to Kite AI - Ask anything about Kite AI features, roadmap, FAQs, hidden facts, and how it works.">
-<meta property="og:title" content="Talk to Kite AI 🪁">
-<meta property="og:description" content="Experience Kite AI in action with hidden facts, roadmap insights, FAQs, and humanlike conversation.">
+<meta name="description" content="Explore Kite AI features, roadmap, hidden facts, and FAQs through an interactive guided demo.">
 <style>
 * { margin:0; padding:0; box-sizing:border-box; font-family:'Segoe UI',sans-serif; }
 body { height:100vh; display:flex; justify-content:center; align-items:center; background:linear-gradient(to bottom,#87CEFA,#ffffff); overflow:hidden; }
@@ -19,49 +17,58 @@ body { height:100vh; display:flex; justify-content:center; align-items:center; b
 .user { background:#ffffff; color:#333; align-self:flex-end; box-shadow:0 3px 6px rgba(0,0,0,0.1); }
 .kiteMessage { background:#1E90FF; color:#fff; align-self:flex-start; box-shadow:0 3px 6px rgba(0,0,0,0.2); }
 .typing { font-style:italic; color:#555; margin:5px 0; font-size:14px; }
-input[type="text"]{width:100%; padding:10px; border-radius:12px; border:none; margin-top:5px; font-size:15px; outline:none;}
-.buttons{display:flex; justify-content:space-between; margin-top:5px;}
-button{padding:8px 15px; border:none; border-radius:12px; cursor:pointer; background:#1E90FF; color:white; font-weight:bold; transition:0.2s; flex:1; margin:0 5px;}
-button:hover{background:#187bcd;}
+.buttons { display:flex; justify-content:space-between; margin-top:5px; flex-wrap:wrap; gap:5px; }
+button { padding:8px 12px; border:none; border-radius:12px; cursor:pointer; background:#1E90FF; color:white; font-weight:bold; transition:0.2s; flex:1; min-width:120px; }
+button:hover { background:#187bcd; }
 </style>
 </head>
 <body>
 <div class="kite">🪁</div>
 <div class="chat-container">
   <div class="messages" id="messages"></div>
-  <input type="text" id="userInput" placeholder="Ask Kite AI anything..." />
   <div class="buttons">
-    <button onclick="startChat()">Replay Chat</button>
-    <button onclick="shareChat()">Share on X</button>
+    <button onclick="showInfo('features')">Show Features</button>
+    <button onclick="showInfo('roadmap')">View Roadmap</button>
+    <button onclick="showInfo('hidden')">Hidden Facts</button>
+    <button onclick="showInfo('faq')">FAQs</button>
+    <button onclick="replayChat()">Replay Chat</button>
   </div>
 </div>
 
 <script>
 const messagesContainer = document.getElementById('messages');
-const userInput = document.getElementById('userInput');
 
-// Comprehensive Kite AI knowledge base
-const kiteKnowledge = [
-  { keywords:['who are you','introduce','yourself'], answer:'I am Kite AI — your intelligent co-creator 🪁. I remember context, reason dynamically, and integrate with code and workflows.' },
-  { keywords:['features','what can you do'], answer:'Kite AI features: Context Persistence, Flow Engine, Code Integration, Agentic Payments, Modular Ecosystem, Humanlike Flow, Hidden Facts Discovery.' },
-  { keywords:['flow engine'], answer:'Flow Engine dynamically optimizes reasoning across conversation nodes and compresses context intelligently.' },
-  { keywords:['context persistence'], answer:'Context Persistence remembers conversation history even across sessions, allowing seamless continuity.' },
-  { keywords:['hidden facts'], answer:'Hidden facts: Cryptographic Identity, Proof of AI (PoAI), Flow Nodes, Agentic Payments, Decentralized AI ecosystem.' },
-  { keywords:['roadmap','future'], answer:'Kite AI roadmap includes expanded agentic capabilities, multi-modal integrations, advanced Flow Engine updates, and developer ecosystem expansion.' },
-  { keywords:['faq','questions','common questions'], answer:'Common FAQs: How does Kite AI remember? What is Flow Engine? How to integrate Kite AI? See hidden facts for details.' },
-  { keywords:['how it works','workflow','architecture'], answer:'Kite AI works using modular agents, Flow Engine reasoning, context compression, cryptographic verification, and API integrations.' },
-  { keywords:['code integration','run code'], answer:'Kite AI can execute code snippets, validate logic, and integrate results seamlessly into conversation.' },
-  { keywords:['agentic payments','payments'], answer:'Kite AI can autonomously perform transactions using stablecoins within a secure environment.' },
-  { keywords:['everything','all'], answer:'Ask me anything — I can explain features, roadmap, hidden facts, architecture, FAQs, and workflows.' }
-];
-
-// Initialize chat sequence
-let chatSequence = [
-  {sender:'kite', text:'Hello! I am Kite AI — your intelligent co-creator. 🪁'},
-  {sender:'kite', text:'Ask me anything about my features, roadmap, hidden facts, FAQs, or how I work.'}
-];
-
-let index = 0;
+const infoDatabase = {
+  features: [
+    "🪁 Context Persistence: Remembers conversation history across sessions.",
+    "💨 Flow Engine: Dynamically optimizes reasoning and workflow.",
+    "💻 Code Integration: Run and validate code snippets seamlessly.",
+    "💰 Agentic Payments: Securely execute transactions autonomously.",
+    "🛠 Modular & Interoperable: Works with decentralized AI ecosystems.",
+    "🧠 Humanlike Flow: Maintains natural, smooth conversation."
+  ],
+  roadmap: [
+    "Q4 2025: Flow Engine upgrade with multi-agent reasoning.",
+    "Q1 2026: Expanded developer ecosystem & API integrations.",
+    "Q2 2026: Multi-modal AI features (text, code, image).",
+    "Q3 2026: Enhanced cryptographic identity & PoAI updates.",
+    "Q4 2026: Agentic payments & autonomous workflow expansion."
+  ],
+  hidden: [
+    "Cryptographic Identity: Verifiable and secure AI actions.",
+    "Flow Nodes: Dynamic conversation pathways for advanced reasoning.",
+    "Proof of AI (PoAI): Demonstrates authenticity of AI outputs.",
+    "Agentic Payments: Execute stablecoin transactions automatically.",
+    "Modular Ecosystem: Works with multiple AI agents seamlessly."
+  ],
+  faq: [
+    "Q: How does Kite AI remember context?\nA: Through Context Persistence and compressed memory storage.",
+    "Q: What is the Flow Engine?\nA: A reasoning engine that dynamically optimizes conversation logic.",
+    "Q: Can Kite AI run code?\nA: Yes, Kite AI can execute code snippets and integrate results.",
+    "Q: How do I access hidden facts?\nA: Click the Hidden Facts button to discover advanced features.",
+    "Q: Is Kite AI decentralized?\nA: Yes, it’s modular and interoperable within a decentralized ecosystem."
+  ]
+};
 
 function addMessage(sender,text){
   const msgDiv = document.createElement('div');
@@ -71,69 +78,24 @@ function addMessage(sender,text){
   messagesContainer.scrollTop = messagesContainer.scrollHeight;
 }
 
-function nextMessage(){
-  if(index>=chatSequence.length) return;
-  const {sender,text} = chatSequence[index];
-  if(sender==='kite'){
-    const typingDiv=document.createElement('div');
-    typingDiv.classList.add('typing');
-    typingDiv.textContent='Kite is typing...';
-    messagesContainer.appendChild(typingDiv);
-    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+function showInfo(category){
+  const items = infoDatabase[category];
+  items.forEach((item,i)=>{
     setTimeout(()=>{
-      typingDiv.remove();
-      addMessage(sender,text);
-      index++;
-      setTimeout(nextMessage,800);
-    },1000+text.length*20);
-  } else {
-    addMessage(sender,text);
-    index++;
-    setTimeout(nextMessage,500);
-  }
+      addMessage('kite', item);
+    }, i*600);
+  });
 }
 
-function startChat(){
-  messagesContainer.innerHTML='';
-  index=0;
-  chatSequence=[
-    {sender:'kite', text:'Hello! I am Kite AI — your intelligent co-creator. 🪁'},
-    {sender:'kite', text:'Ask me anything about my features, roadmap, hidden facts, FAQs, or how I work.'}
-  ];
-  nextMessage();
+function replayChat(){
+  messagesContainer.innerHTML = '';
+  addMessage('kite', 'Welcome back! Choose a topic to explore Kite AI features, roadmap, hidden facts, or FAQs.');
 }
 
-userInput.addEventListener('keypress', function(e){
-  if(e.key==='Enter' && userInput.value.trim()!==''){
-    const question = userInput.value.trim();
-    addMessage('user', question);
-
-    let answer = 'I am still learning about that, but it sounds interesting!';
-    const lowerQ = question.toLowerCase();
-    for(const item of kiteKnowledge){
-      for(const key of item.keywords){
-        if(lowerQ.includes(key)){
-          answer = item.answer;
-          break;
-        }
-      }
-    }
-
-    chatSequence.push({sender:'kite', text:answer});
-    index = chatSequence.length-1;
-    nextMessage();
-    userInput.value='';
-  }
-});
-
-// Auto-start chat
-window.onload = () => { startChat(); }
-
-function shareChat(){
-  const url = encodeURIComponent(window.location.href);
-  const text = encodeURIComponent('I just explored the “Talk to Kite AI” simulation! 🪁 @KiteAI');
-  window.open(`https://x.com/intent/tweet?text=${text}&url=${url}`,'_blank');
-}
+// Auto-start demo
+window.onload = () => {
+  addMessage('kite', 'Hello! I am Kite AI 🪁. Explore my features, roadmap, hidden facts, and FAQs using the buttons below.');
+};
 </script>
 </body>
 </html>
