@@ -1,117 +1,115 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Talk to Kite AI 🪁 Quiz</title>
-<meta name="description" content="Explore Kite AI features and test your knowledge with a 10-question quiz and scoring system.">
-<style>
-* { margin:0; padding:0; box-sizing:border-box; font-family:'Segoe UI',sans-serif; }
-body { height:100vh; display:flex; justify-content:center; align-items:center; background:linear-gradient(to bottom,#87CEFA,#ffffff); overflow:hidden; }
-.kite { position:absolute; top:10%; left:-50px; font-size:50px; animation:kiteFly 25s linear infinite; z-index:0; }
-@keyframes kiteFly { 0%{transform:translate(0,0) rotate(0deg);} 25%{transform:translate(120px,20px) rotate(10deg);} 50%{transform:translate(240px,-20px) rotate(-10deg);} 75%{transform:translate(360px,15px) rotate(5deg);} 100%{transform:translate(480px,0px) rotate(0deg);} }
-.chat-container { position:relative; width:500px; max-width:95%; height:650px; background:rgba(255,255,255,0.15); backdrop-filter:blur(15px); border-radius:20px; padding:20px; display:flex; flex-direction:column; box-shadow:0 10px 40px rgba(0,0,0,0.25); z-index:1; }
-.messages { flex:1; overflow-y:auto; padding-right:5px; margin-bottom:10px; }
-.message { margin:10px 0; padding:12px 18px; border-radius:20px; max-width:75%; word-wrap:break-word; font-size:15px; line-height:1.4; opacity:0; transform:translateY(20px); animation:fadeUp 0.5s forwards; }
-@keyframes fadeUp { to{opacity:1; transform:translateY(0);} }
-.user { background:#ffffff; color:#333; align-self:flex-end; box-shadow:0 3px 6px rgba(0,0,0,0.1); }
-.kiteMessage { background:#1E90FF; color:#fff; align-self:flex-start; box-shadow:0 3px 6px rgba(0,0,0,0.2); }
-.typing { font-style:italic; color:#555; margin:5px 0; font-size:14px; }
-.buttons { display:flex; justify-content:space-between; margin-top:5px; flex-wrap:wrap; gap:5px; }
-button { padding:8px 12px; border:none; border-radius:12px; cursor:pointer; background:#1E90FF; color:white; font-weight:bold; transition:0.2s; flex:1; min-width:120px; }
-button:hover { background:#187bcd; }
-.quiz-option { display:block; margin:5px 0; padding:8px 12px; border-radius:12px; border:1px solid #1E90FF; cursor:pointer; background:white; transition:0.2s; }
-.quiz-option:hover { background:#1E90FF; color:white; }
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KiteAI Hub</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.3.3/dist/tailwind.min.css" rel="stylesheet">
+  <style>
+    body { background: #f0f9ff; font-family: 'Arial', sans-serif; }
+    .leaderboard { max-height: 300px; overflow-y: auto; }
+    .quiz-option:hover { background-color: #dbeafe; cursor: pointer; }
+  </style>
 </head>
-<body>
-<div class="kite">🪁</div>
-<div class="chat-container">
-  <div class="messages" id="messages"></div>
-  <div class="buttons">
-    <button onclick="startQuiz()">Start Quiz</button>
-    <button onclick="replayChat()">Replay Chat</button>
-  </div>
-</div>
+<body class="text-gray-800">
 
-<script>
-const messagesContainer = document.getElementById('messages');
+  <!-- Header -->
+  <header class="bg-blue-500 text-white p-6 text-center">
+    <h1 class="text-3xl font-bold">Welcome to KiteAI Hub</h1>
+    <p class="mt-2">All about KiteAI, interact, quiz & leaderboard</p>
+  </header>
 
-const quizQuestions = [
-  {q:"What feature allows Kite AI to remember conversation history?", options:["Flow Engine","Context Persistence","Agentic Payments","Hidden Facts"], answer:1},
-  {q:"Which engine optimizes reasoning dynamically?", options:["Flow Engine","Context Persistence","Code Integration","PoAI"], answer:0},
-  {q:"Which feature allows Kite AI to execute code?", options:["Agentic Payments","Code Integration","Flow Nodes","Hidden Facts"], answer:1},
-  {q:"Which feature executes autonomous transactions?", options:["Agentic Payments","Flow Engine","Context Persistence","PoAI"], answer:0},
-  {q:"Which of these is a hidden fact?", options:["Flow Engine","Cryptographic Identity","Code Integration","Roadmap"], answer:1},
-  {q:"PoAI stands for?", options:["Proof of AI","Process of AI","Persistence of AI","Programmed AI"], answer:0},
-  {q:"Which feature compresses context intelligently?", options:["Flow Engine","Context Persistence","Agentic Payments","Modular Ecosystem"], answer:1},
-  {q:"Which is part of Kite AI roadmap?", options:["Multi-modal AI","Flying Kite Feature","PoAI Expansion","Both A and C"], answer:3},
-  {q:"Kite AI maintains natural conversation using?", options:["Flow Engine","Hidden Facts","Humanlike Flow","Agentic Payments"], answer:2},
-  {q:"Which feature ensures modular and interoperable AI?", options:["Modular Ecosystem","Code Integration","Flow Nodes","Roadmap"], answer:0}
-];
+  <!-- About Section -->
+  <section id="about" class="p-6">
+    <h2 class="text-2xl font-bold mb-4">About KiteAI</h2>
+    <p>KiteAI is an advanced AI assistant designed to help you with coding, learning, and productivity. Fast, reliable, and humanlike!</p>
+  </section>
 
-let currentQuestion = 0;
-let score = 0;
+  <!-- Roadmap Section -->
+  <section id="roadmap" class="bg-blue-50 p-6">
+    <h2 class="text-2xl font-bold mb-4">Roadmap</h2>
+    <ul class="list-disc list-inside">
+      <li>Q1 2025: Launch basic AI assistant</li>
+      <li>Q2 2025: Add code integration & project support</li>
+      <li>Q3 2025: Mobile app & advanced reasoning features</li>
+      <li>Q4 2025: Community engagement & leaderboard system</li>
+    </ul>
+  </section>
 
-function addMessage(sender,text){
-  const msgDiv = document.createElement('div');
-  msgDiv.classList.add('message', sender==='kite'?'kiteMessage':'user');
-  msgDiv.textContent = text;
-  messagesContainer.appendChild(msgDiv);
-  messagesContainer.scrollTop = messagesContainer.scrollHeight;
-}
+  <!-- FAQ Section -->
+  <section id="faq" class="p-6">
+    <h2 class="text-2xl font-bold mb-4">FAQ</h2>
+    <details class="mb-2">
+      <summary class="cursor-pointer font-semibold">What is KiteAI?</summary>
+      <p>KiteAI is your smart AI companion to code, learn, and automate tasks efficiently.</p>
+    </details>
+    <details class="mb-2">
+      <summary class="cursor-pointer font-semibold">How can I interact with KiteAI?</summary>
+      <p>You can chat with KiteAI, use its code assistant, or participate in quizzes and leaderboards here!</p>
+    </details>
+    <details class="mb-2">
+      <summary class="cursor-pointer font-semibold">Is KiteAI free?</summary>
+      <p>Yes! Basic features are free. Premium features are coming soon.</p>
+    </details>
+  </section>
 
-function showQuizQuestion(){
-  messagesContainer.innerHTML = '';
-  const q = quizQuestions[currentQuestion];
-  addMessage('kite', `Question ${currentQuestion+1}: ${q.q}`);
-  q.options.forEach((opt,i)=>{
-    const btn = document.createElement('button');
-    btn.textContent = opt;
-    btn.classList.add('quiz-option');
-    btn.onclick = ()=>checkAnswer(i);
-    messagesContainer.appendChild(btn);
-  });
-}
+  <!-- Quiz Section -->
+  <section id="quiz" class="bg-blue-50 p-6">
+    <h2 class="text-2xl font-bold mb-4">Interactive Quiz</h2>
+    <div id="quiz-container" class="space-y-4">
+      <div class="quiz-question font-semibold">1. What is KiteAI mainly used for?</div>
+      <div class="quiz-options space-y-2">
+        <div class="quiz-option p-2 border rounded" onclick="answerQuiz(this, 'correct')">AI coding assistant</div>
+        <div class="quiz-option p-2 border rounded" onclick="answerQuiz(this, 'wrong')">Cooking recipes</div>
+        <div class="quiz-option p-2 border rounded" onclick="answerQuiz(this, 'wrong')">Music composition</div>
+        <div class="quiz-option p-2 border rounded" onclick="answerQuiz(this, 'wrong')">Travel guide</div>
+      </div>
+    </div>
+    <div id="quiz-result" class="mt-4 font-bold"></div>
+  </section>
 
-function checkAnswer(selected){
-  const correct = quizQuestions[currentQuestion].answer;
-  if(selected === correct){
-    score++;
-    addMessage('kite', "✅ Correct!");
-  } else {
-    addMessage('kite', `❌ Wrong! Correct answer: ${quizQuestions[currentQuestion].options[correct]}`);
-  }
-  currentQuestion++;
-  setTimeout(()=>{
-    if(currentQuestion<quizQuestions.length){
-      showQuizQuestion();
-    } else {
-      addMessage('kite', `🏆 Quiz completed! Your score: ${score} / ${quizQuestions.length}`);
-      const replayBtn = document.createElement('button');
-      replayBtn.textContent = "Replay Quiz";
-      replayBtn.onclick = startQuiz;
-      replayBtn.style.marginTop="10px";
-      messagesContainer.appendChild(replayBtn);
+  <!-- Leaderboard Section -->
+  <section id="leaderboard" class="p-6">
+    <h2 class="text-2xl font-bold mb-4">Leaderboard</h2>
+    <div class="leaderboard border p-4 rounded bg-white">
+      <ol id="leaderboard-list" class="list-decimal list-inside">
+        <li>Alice - 120 pts</li>
+        <li>Bob - 100 pts</li>
+        <li>Charlie - 90 pts</li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- Share to X Section -->
+  <section id="share" class="bg-blue-50 p-6 text-center">
+    <h2 class="text-2xl font-bold mb-4">Share your KiteAI experience</h2>
+    <a id="share-x" href="https://twitter.com/intent/tweet?text=Check%20out%20KiteAI!%20%40GoKiteAI%20%23KiteAI" target="_blank" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Share on X</a>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-blue-500 text-white p-4 text-center">
+    &copy; 2025 KiteAI Hub | Built with ❤️
+  </footer>
+
+  <script>
+    function answerQuiz(element, status) {
+      const result = document.getElementById('quiz-result');
+      if(status === 'correct') {
+        result.innerHTML = "🎉 Correct Answer!";
+        element.style.backgroundColor = "#a7f3d0";
+        addLeaderboard('You', 50);
+      } else {
+        result.innerHTML = "❌ Wrong Answer. Try Again!";
+        element.style.backgroundColor = "#fecaca";
+      }
     }
-  },1000);
-}
 
-function startQuiz(){
-  currentQuestion=0;
-  score=0;
-  showQuizQuestion();
-}
-
-function replayChat(){
-  messagesContainer.innerHTML = '';
-  addMessage('kite', 'Hello! I am Kite AI 🪁. Explore my features, roadmap, hidden facts, and FAQs using the buttons.');
-}
-
-// Auto-start welcome message
-window.onload = () => {
-  addMessage('kite', 'Welcome! Click "Start Quiz" to test your knowledge about Kite AI features, roadmap, hidden facts, and more.');
-};
-</script>
+    function addLeaderboard(name, points) {
+      const list = document.getElementById('leaderboard-list');
+      const newEntry = document.createElement('li');
+      newEntry.textContent = `${name} - ${points} pts`;
+      list.appendChild(newEntry);
+    }
+  </script>
 </body>
 </html>
