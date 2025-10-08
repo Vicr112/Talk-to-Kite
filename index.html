@@ -5,29 +5,20 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Kite AI Hub 🪁</title>
 <style>
-    /* General Reset */
     * { margin:0; padding:0; box-sizing:border-box; font-family: 'Arial', sans-serif; }
     body { background: linear-gradient(135deg, #00c6ff, #0072ff); color: #fff; overflow-x: hidden; }
-
-    /* Container */
     .container { width: 90%; max-width: 1200px; margin: 0 auto; padding: 20px; }
-
-    /* Hero */
     header { text-align: center; padding: 50px 20px; }
     header h1 { font-size: 3em; color: #fff; text-shadow: 2px 2px 10px rgba(0,0,0,0.3); }
     header p { font-size: 1.3em; margin-top: 10px; text-shadow: 1px 1px 5px rgba(0,0,0,0.2); }
-
-    /* Kite Canvas */
     #kiteCanvas { position: fixed; top:0; left:0; width: 100%; height: 100%; z-index: -1; }
 
-    /* Projects Section */
     .projects { display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; margin: 40px 0; }
     .card { background: rgba(255,255,255,0.1); border-radius: 15px; padding: 25px; width: 280px; box-shadow: 0 8px 20px rgba(0,0,0,0.3); transition: transform 0.3s, background 0.3s; }
     .card:hover { transform: translateY(-10px); background: rgba(255,255,255,0.2); }
     .card h3 { margin-bottom: 15px; font-size: 1.5em; color: #fff; }
     .card p { font-size: 1em; line-height: 1.5; }
 
-    /* Quiz Section */
     .quiz-section { background: rgba(0,0,0,0.4); padding: 40px; border-radius: 20px; margin: 40px 0; text-align:center; box-shadow: 0 8px 20px rgba(0,0,0,0.5); }
     .quiz-section h2 { margin-bottom: 30px; font-size:2em; text-shadow:2px 2px 5px rgba(0,0,0,0.5);}
     .quiz-question { margin-bottom: 20px; font-size:1.3em; font-weight:bold; }
@@ -35,21 +26,18 @@
     .quiz-options button:hover { background: #ff0; color: #000; }
     .quiz-result { margin-top: 15px; font-weight:bold; font-size:1.2em; }
 
-    /* Leaderboard */
     .leaderboard { margin-top: 30px; text-align:left; background: rgba(255,255,255,0.1); padding: 15px; border-radius: 15px; max-width: 400px; margin-left:auto; margin-right:auto; }
     .leaderboard h3 { margin-bottom:10px; color:#fff; text-shadow:1px 1px 5px rgba(0,0,0,0.5);}
     .leaderboard ul { list-style:none; }
     .leaderboard li { padding:5px 0; font-size:1.1em; }
 
-    /* Footer */
     footer { text-align: center; padding: 30px 20px; color: #fff; border-top: 1px solid rgba(255,255,255,0.2); text-shadow:1px 1px 3px rgba(0,0,0,0.3); }
 
-    /* Congratulations */
     .congrats { font-size:2em; margin-top:20px; color:#ff0; text-shadow:2px 2px 10px #000; animation: bounce 1s infinite; }
-    @keyframes bounce {
-        0%, 100% { transform: translateY(0);}
-        50% { transform: translateY(-15px);}
-    }
+    @keyframes bounce { 0%,100%{transform:translateY(0);}50%{transform:translateY(-15px);} }
+
+    .share-copy { margin-top:20px; }
+    .share-copy button { margin:5px; padding:10px 15px; border:none; border-radius:5px; cursor:pointer; background:#ff0; color:#000; font-weight:bold; }
 </style>
 </head>
 <body>
@@ -58,144 +46,142 @@
 
 <div class="container">
 
-    <!-- Hero Section -->
-    <header>
-        <h1>Welcome to Kite AI Hub 🪁</h1>
-        <p>Discover Kite AI, explore projects, and take fun quizzes to showcase your skills!</p>
-    </header>
+<header>
+    <h1>Welcome to Kite AI Hub 🪁</h1>
+    <p>Discover Kite AI, explore projects, and take interactive quizzes!</p>
+</header>
 
-    <!-- Projects Section -->
-    <section>
-        <h2 style="text-align:center; margin-bottom:20px;">Kite AI Projects & Features</h2>
-        <div class="projects">
-            <div class="card">
-                <h3>AI Coding Assistant</h3>
-                <p>Kite AI helps developers autocomplete code, detect errors, and generate solutions quickly and efficiently.</p>
-            </div>
-            <div class="card">
-                <h3>Prompt Playground</h3>
-                <p>Experiment with AI prompts and see Kite AI generate creative outputs for coding, writing, and more.</p>
-            </div>
-            <div class="card">
-                <h3>Interactive Learning</h3>
-                <p>Engage with tutorials and exercises built around Kite AI to enhance coding skills and AI knowledge.</p>
-            </div>
-            <div class="card">
-                <h3>Community Hub</h3>
-                <p>Share insights, projects, and collaborate with other Kite AI enthusiasts in a vibrant community.</p>
-            </div>
-        </div>
-    </section>
+<section>
+    <h2 style="text-align:center; margin-bottom:20px;">Kite AI Projects & Features</h2>
+    <div class="projects">
+        <div class="card"><h3>AI Coding Assistant</h3><p>Autocomplete code, detect errors, and generate solutions efficiently.</p></div>
+        <div class="card"><h3>Prompt Playground</h3><p>Experiment with AI prompts and generate creative outputs for coding, writing, and more.</p></div>
+        <div class="card"><h3>Interactive Learning</h3><p>Engage with tutorials and exercises built around Kite AI to enhance coding skills and AI knowledge.</p></div>
+        <div class="card"><h3>Community Hub</h3><p>Share insights, projects, and collaborate with other Kite AI enthusiasts.</p></div>
+    </div>
+</section>
 
-    <!-- Quiz Section -->
-    <section class="quiz-section">
-        <h2>Kite AI Quiz 🪁</h2>
-        <div id="quizContainer"></div>
-        <div class="quiz-result" id="quizResult"></div>
-        <button onclick="nextQuiz()">Next Question</button>
+<section class="quiz-section">
+    <h2>Kite AI Quiz 🪁</h2>
+    <div id="quizContainer"></div>
+    <div class="quiz-result" id="quizResult"></div>
+    <button onclick="nextQuiz()">Next Question</button>
 
-        <!-- Leaderboard Save -->
-        <div class="leaderboard">
-            <h3>Leaderboard</h3>
-            <ul id="leaderboardList"></ul>
-            <input type="text" id="playerName" placeholder="Enter Name" style="padding:8px; border-radius:5px; border:none; margin-top:10px;">
-            <button onclick="saveScore()" style="margin-top:10px; padding:10px 15px; border:none; border-radius:5px; cursor:pointer; background:#ff0;">Save Score</button>
-        </div>
-    </section>
+    <div class="share-copy" id="shareCopy" style="display:none;">
+        <button onclick="copyResult()">Copy Result</button>
+        <button onclick="shareResult()">Share Result</button>
+    </div>
 
-    <footer>
-        Built with ❤️ by [Your Name] | Follow me on <a href="#" style="color:#ff0;">X/Twitter</a>
-    </footer>
-</div>
+    <div class="leaderboard">
+        <h3>Leaderboard</h3>
+        <ul id="leaderboardList"></ul>
+        <input type="text" id="playerName" placeholder="Enter Name" style="padding:8px; border-radius:5px; border:none; margin-top:10px;">
+        <button onclick="saveScore()" style="margin-top:10px; padding:10px 15px; border:none; border-radius:5px; cursor:pointer; background:#ff0;">Save Score</button>
+    </div>
+</section>
+
+<footer>
+    Built with ❤️ by @Vikash12Singh | Follow me on <a href="#" style="color:#ff0;">X/Twitter</a>
+</footer>
 
 <script>
-    // -------- Kite Animation ----------
-    const canvas = document.getElementById('kiteCanvas');
-    const ctx = canvas.getContext('2d');
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+const canvas = document.getElementById('kiteCanvas');
+const ctx = canvas.getContext('2d');
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
 
-    let kite = { x: 100, y: 100, dx: 3, dy: 2, color: '#ff0' };
+let kite = { x: 100, y: 100, dx: 3, dy: 2, color: '#ff0' };
 
-    function drawKite() {
-        ctx.clearRect(0,0,canvas.width,canvas.height);
-        ctx.fillStyle = kite.color;
-        ctx.beginPath();
-        ctx.moveTo(kite.x, kite.y);
-        ctx.lineTo(kite.x+20, kite.y+30);
-        ctx.lineTo(kite.x-20, kite.y+30);
-        ctx.closePath();
-        ctx.fill();
+function drawKite() {
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    ctx.fillStyle = kite.color;
+    ctx.beginPath();
+    ctx.moveTo(kite.x, kite.y);
+    ctx.lineTo(kite.x+20, kite.y+30);
+    ctx.lineTo(kite.x-20, kite.y+30);
+    ctx.closePath();
+    ctx.fill();
+    kite.x += kite.dx; kite.y += kite.dy;
+    if(kite.x > canvas.width || kite.x < 0) kite.dx *= -1;
+    if(kite.y > canvas.height/2 || kite.y < 0) kite.dy *= -1;
+    requestAnimationFrame(drawKite);
+}
+drawKite();
 
-        kite.x += kite.dx;
-        kite.y += kite.dy;
+// -------- Quiz Logic ----------
+const quizzes = [
+    {q:"What does Kite AI specialize in?", a:["Music","Coding & AI","Cooking","Travel"], correct:1},
+    {q:"Which language does Kite AI understand?", a:["Python & JS","Only Python","Only JS","C++"], correct:0},
+    {q:"Kite AI can help you with?", a:["AI coding","Painting","Driving","Gardening"], correct:0},
+    {q:"Who can use Kite AI?", a:["Everyone","Only Devs","Only Kids","Only Experts"], correct:0},
+    {q:"What emoji represents Kite AI Hub?", a:["🪁","🚗","🎸","🍕"], correct:0},
+    {q:"What is Kite AI primarily used for?", a:["Chatbot","Coding assistance","Video editing","Cooking"], correct:1},
+    {q:"Can Kite AI generate code snippets?", a:["Yes","No","Sometimes","Never"], correct:0},
+    {q:"Does Kite AI support multiple programming languages?", a:["Yes","Only Python","Only JS","No"], correct:0},
+    {q:"Can beginners use Kite AI?", a:["Yes","No","Only Experts","Only Developers"], correct:0},
+    {q:"Is Kite AI community friendly?", a:["Yes","No","Sometimes","Rarely"], correct:0}
+];
 
-        if(kite.x > canvas.width || kite.x < 0) kite.dx *= -1;
-        if(kite.y > canvas.height/2 || kite.y < 0) kite.dy *= -1;
+let currentQuiz = 0;
+let score = 0;
+let batchSize = 5;
 
-        requestAnimationFrame(drawKite);
-    }
-    drawKite();
+function showQuiz() {
+    const container = document.getElementById('quizContainer');
+    const quiz = quizzes[currentQuiz];
+    container.innerHTML = `<div class="quiz-question">${quiz.q}</div>`;
+    let optionsHTML = '<div class="quiz-options">';
+    quiz.a.forEach((opt, idx)=>{ optionsHTML += `<button onclick="checkAnswer(${idx})">${opt}</button>`; });
+    optionsHTML += '</div>';
+    container.innerHTML += optionsHTML;
+    document.getElementById('quizResult').textContent = '';
+    document.getElementById('shareCopy').style.display = 'none';
+}
 
-    // -------- Quiz Logic ----------
-    const quizzes = [
-        {q:"What does Kite AI specialize in?", a:["Music", "Coding & AI", "Cooking", "Travel"], correct:1},
-        {q:"Which language does Kite AI understand?", a:["Python & JS", "Only Python", "Only JS", "C++"], correct:0},
-        {q:"Kite AI can help you with?", a:["AI coding", "Painting", "Driving", "Gardening"], correct:0},
-        {q:"Who can use Kite AI?", a:["Everyone", "Only Devs", "Only Kids", "Only Experts"], correct:0},
-        {q:"What emoji represents Kite AI Hub?", a:["🪁", "🚗", "🎸", "🍕"], correct:0}
-    ];
+function checkAnswer(idx){
+    const result = document.getElementById('quizResult');
+    if(idx === quizzes[currentQuiz].correct){ result.textContent="✅ Correct!"; result.style.color="lightgreen"; score++; }
+    else{ result.textContent="❌ Wrong!"; result.style.color="red"; }
 
-    let currentQuiz = 0;
-    let score = 0;
-
-    function showQuiz() {
-        const container = document.getElementById('quizContainer');
-        const quiz = quizzes[currentQuiz];
-        container.innerHTML = `<div class="quiz-question">${quiz.q}</div>`;
-        let optionsHTML = '<div class="quiz-options">';
-        quiz.a.forEach((opt, idx) => {
-            optionsHTML += `<button onclick="checkAnswer(${idx})">${opt}</button>`;
-        });
-        optionsHTML += '</div>';
-        container.innerHTML += optionsHTML;
-        document.getElementById('quizResult').textContent = '';
-    }
-
-    function checkAnswer(idx) {
-        const result = document.getElementById('quizResult');
-        if(idx === quizzes[currentQuiz].correct) {
-            result.textContent = "✅ Correct!";
-            result.style.color = "lightgreen";
-            score++;
-        } else {
-            result.textContent = "❌ Wrong! Try next.";
-            result.style.color = "red";
-        }
-        // If all questions done
-        if(score === quizzes.length && currentQuiz === quizzes.length-1){
-            result.innerHTML = '🎉 Congratulations! You answered all correctly! 🪁';
-            kite.color = '#ff0';
+    // Check if batch finished
+    if((currentQuiz+1)%batchSize===0){
+        document.getElementById('shareCopy').style.display = 'block';
+        if(score%batchSize===batchSize){ // all correct in batch
+            result.innerHTML = '🎉 Congratulations! All answers in this batch correct! 🪁';
         }
     }
+}
 
-    function nextQuiz() {
-        currentQuiz = (currentQuiz + 1) % quizzes.length;
-        showQuiz();
-    }
-
+function nextQuiz(){
+    currentQuiz = (currentQuiz + 1) % quizzes.length;
     showQuiz();
+}
 
-    // -------- Leaderboard Save ----------
-    function saveScore() {
-        const name = document.getElementById('playerName').value || 'Anonymous';
-        const list = document.getElementById('leaderboardList');
-        const li = document.createElement('li');
-        li.textContent = `${name}: ${score} / ${quizzes.length}`;
-        list.appendChild(li);
-        document.getElementById('playerName').value = '';
-    }
+// Share & Copy
+function copyResult(){
+    const text = `I scored ${score} / ${quizzes.length} in Kite AI Quiz! 🪁`;
+    navigator.clipboard.writeText(text);
+    alert("Result copied to clipboard!");
+}
+function shareResult(){
+    const text = `I scored ${score} / ${quizzes.length} in Kite AI Quiz! Check it out! 🪁`;
+    const url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`;
+    window.open(url,'_blank');
+}
+
+// Leaderboard
+function saveScore(){
+    const name = document.getElementById('playerName').value || 'Anonymous';
+    const list = document.getElementById('leaderboardList');
+    const li = document.createElement('li');
+    li.textContent = `${name}: ${score} / ${quizzes.length}`;
+    list.appendChild(li);
+    document.getElementById('playerName').value = '';
+}
+
+// Initialize first quiz
+showQuiz();
 </script>
 
 </body>
-    </html>
+</html>
