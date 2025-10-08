@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Talk to Kite AI 🪁</title>
+  <meta name="description" content="Interactive Talk to Kite AI Simulation - Explore hidden facts, reasoning, and advanced AI capabilities.">
+  <meta property="og:title" content="Talk to Kite AI 🪁">
+  <meta property="og:description" content="Experience Kite AI in action with hidden facts and a humanlike chat simulation.">
+  <meta property="og:image" content="https://i.imgur.com/yourPreviewImage.png">
+  <meta property="og:type" content="website">
+  <style>
+    /* Reset & Base */
+    * { margin:0; padding:0; box-sizing:border-box; font-family: 'Segoe UI', sans-serif; }
+    body { 
+      height:100vh; 
+      display:flex; 
+      justify-content:center; 
+      align-items:center; 
+      background: linear-gradient(to bottom, #87CEFA, #ffffff); 
+      overflow:hidden; 
+    }
+    /* Floating Kite */
+    .kite { 
+      position:absolute; top:10%; left:5%; 
+      font-size:50px; 
+      animation: fly 20s infinite linear alternate; 
+    }
+    @keyframes fly {
+      0% { transform: translate(0,0) rotate(0deg);}
+      25% { transform: translate(80px,20px) rotate(15deg);}
+      50% { transform: translate(160px,-10px) rotate(-15deg);}
+      75% { transform: translate(240px,15px) rotate(10deg);}
+      100% { transform: translate(320px,0px) rotate(0deg);}
+    }
+    /* Chat Box */
+    .chat-container {
+      width: 350px;
+      max-width: 90%;
+      background: rgba(255,255,255,0.2);
+      backdrop-filter: blur(10px);
+      border-radius: 15px;
+      padding: 20px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+      display:flex;
+      flex-direction:column;
+      overflow:hidden;
+    }
+    .messages {
+      flex:1;
+      overflow-y:auto;
+      margin-bottom: 10px;
+    }
+    .message {
+      margin: 8px 0;
+      padding: 10px 15px;
+      border-radius: 15px;
+      max-width: 80%;
+      word-wrap: break-word;
+      opacity:0;
+      transform: translateY(20px);
+      animation: fadeInUp 0.5s forwards;
+    }
+    .user { background:#ffffff; color:#333; align-self:flex-end; }
+    .kite { background:#1E90FF; color:#fff; align-self:flex-start; }
+    @keyframes fadeInUp {
+      to { opacity:1; transform: translateY(0); }
+    }
+    .typing {
+      font-style: italic;
+      color: #555;
+      margin:5px 0;
+    }
+    /* Buttons */
+    .buttons { display:flex; justify-content:space-between; margin-top:10px; }
+    button {
+      padding:8px 12px;
+      border:none;
+      border-radius:10px;
+      cursor:pointer;
+      background:#1E90FF;
+      color:white;
+      font-weight:bold;
+      transition:0.2s;
+    }
+    button:hover { background:#187bcd; }
+  </style>
+</head>
+<body>
+
+  <div class="kite">🪁</div>
+
+  <div class="chat-container">
+    <div class="messages" id="messages"></div>
+    <div class="buttons">
+      <button onclick="startChat()">Start Chat</button>
+      <button onclick="shareChat()">Share on X</button>
+    </div>
+  </div>
+
+  <script>
+    const messagesContainer = document.getElementById('messages');
+
+    const chatSequence = [
+      { sender: 'kite', text: 'Hello! I am Kite AI — your intelligent co-creator. 🪁' },
+      { sender: 'user', text: 'Who are you?' },
+      { sender: 'kite', text: 'I remember context across conversations, even when you start a new chat.' },
+      { sender: 'user', text: 'How do you remember?' },
+      { sender: 'kite', text: 'Through my Context Persistence and Flow Memory systems, which compress and recall important ideas.' },
+      { sender: 'user', text: 'What makes you different from other AIs?' },
+      { sender: 'kite', text: 'I integrate with code, execute logic, and adapt to your tone — humanlike conversation is my specialty.' },
+      { sender: 'user', text: 'Any hidden facts about you?' },
+      { sender: 'kite', text: 'I have a cryptographic identity for verifiable actions, programmable governance, and I can perform agentic payments.' },
+      { sender: 'kite', text: 'Fun fact: I operate with a Flow Engine that optimizes reasoning dynamically. 💨' },
+      { sender: 'user', text: 'Impressive!' },
+      { sender: 'kite', text: 'Thanks! The future of AI feels smooth and collaborative. 🪁' }
+    ];
+
+    let index = 0;
+
+    function addMessage(sender, text) {
+      const msgDiv = document.createElement('div');
+      msgDiv.classList.add('message', sender);
+      msgDiv.textContent = text;
+      messagesContainer.appendChild(msgDiv);
+      messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    }
+
+    function startChat() {
+      messagesContainer.innerHTML = '';
+      index = 0;
+      nextMessage();
+    }
+
+    function nextMessage() {
+      if(index >= chatSequence.length) return;
+      const { sender, text } = chatSequence[index];
+      if(sender === 'kite') {
+        const typingDiv = document.createElement('div');
+        typingDiv.classList.add('typing');
+        typingDiv.textContent = 'Kite is typing...';
+        messagesContainer.appendChild(typingDiv);
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+
+        setTimeout(() => {
+          typingDiv.remove();
+          addMessage(sender, text);
+          index++;
+          setTimeout(nextMessage, 800);
+        }, 1200 + text.length*20);
+      } else {
+        addMessage(sender, text);
+        index++;
+        setTimeout(nextMessage, 500);
+      }
+    }
+
+    function shareChat() {
+      const url = encodeURIComponent(window.location.href);
+      const text = encodeURIComponent('Just experienced the “Talk to Kite” simulation — feels smoother than any AI I\'ve used. 🪁 @KiteAI');
+      window.open(`https://x.com/intent/tweet?text=${text}&url=${url}`, '_blank');
+    }
+  </script>
+
+</body>
+</html>
