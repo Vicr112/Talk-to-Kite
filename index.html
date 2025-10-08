@@ -3,14 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Talk to Kite AI 🪁</title>
-<meta name="description" content="Explore Kite AI features, roadmap, hidden facts, and FAQs through an interactive guided demo.">
+<title>Talk to Kite AI 🪁 Quiz</title>
+<meta name="description" content="Explore Kite AI features and test your knowledge with a 10-question quiz and scoring system.">
 <style>
 * { margin:0; padding:0; box-sizing:border-box; font-family:'Segoe UI',sans-serif; }
 body { height:100vh; display:flex; justify-content:center; align-items:center; background:linear-gradient(to bottom,#87CEFA,#ffffff); overflow:hidden; }
 .kite { position:absolute; top:10%; left:-50px; font-size:50px; animation:kiteFly 25s linear infinite; z-index:0; }
 @keyframes kiteFly { 0%{transform:translate(0,0) rotate(0deg);} 25%{transform:translate(120px,20px) rotate(10deg);} 50%{transform:translate(240px,-20px) rotate(-10deg);} 75%{transform:translate(360px,15px) rotate(5deg);} 100%{transform:translate(480px,0px) rotate(0deg);} }
-.chat-container { position:relative; width:450px; max-width:95%; height:600px; background:rgba(255,255,255,0.15); backdrop-filter:blur(15px); border-radius:20px; padding:20px; display:flex; flex-direction:column; box-shadow:0 10px 40px rgba(0,0,0,0.25); z-index:1; }
+.chat-container { position:relative; width:500px; max-width:95%; height:650px; background:rgba(255,255,255,0.15); backdrop-filter:blur(15px); border-radius:20px; padding:20px; display:flex; flex-direction:column; box-shadow:0 10px 40px rgba(0,0,0,0.25); z-index:1; }
 .messages { flex:1; overflow-y:auto; padding-right:5px; margin-bottom:10px; }
 .message { margin:10px 0; padding:12px 18px; border-radius:20px; max-width:75%; word-wrap:break-word; font-size:15px; line-height:1.4; opacity:0; transform:translateY(20px); animation:fadeUp 0.5s forwards; }
 @keyframes fadeUp { to{opacity:1; transform:translateY(0);} }
@@ -20,6 +20,8 @@ body { height:100vh; display:flex; justify-content:center; align-items:center; b
 .buttons { display:flex; justify-content:space-between; margin-top:5px; flex-wrap:wrap; gap:5px; }
 button { padding:8px 12px; border:none; border-radius:12px; cursor:pointer; background:#1E90FF; color:white; font-weight:bold; transition:0.2s; flex:1; min-width:120px; }
 button:hover { background:#187bcd; }
+.quiz-option { display:block; margin:5px 0; padding:8px 12px; border-radius:12px; border:1px solid #1E90FF; cursor:pointer; background:white; transition:0.2s; }
+.quiz-option:hover { background:#1E90FF; color:white; }
 </style>
 </head>
 <body>
@@ -27,10 +29,7 @@ button:hover { background:#187bcd; }
 <div class="chat-container">
   <div class="messages" id="messages"></div>
   <div class="buttons">
-    <button onclick="showInfo('features')">Show Features</button>
-    <button onclick="showInfo('roadmap')">View Roadmap</button>
-    <button onclick="showInfo('hidden')">Hidden Facts</button>
-    <button onclick="showInfo('faq')">FAQs</button>
+    <button onclick="startQuiz()">Start Quiz</button>
     <button onclick="replayChat()">Replay Chat</button>
   </div>
 </div>
@@ -38,37 +37,21 @@ button:hover { background:#187bcd; }
 <script>
 const messagesContainer = document.getElementById('messages');
 
-const infoDatabase = {
-  features: [
-    "🪁 Context Persistence: Remembers conversation history across sessions.",
-    "💨 Flow Engine: Dynamically optimizes reasoning and workflow.",
-    "💻 Code Integration: Run and validate code snippets seamlessly.",
-    "💰 Agentic Payments: Securely execute transactions autonomously.",
-    "🛠 Modular & Interoperable: Works with decentralized AI ecosystems.",
-    "🧠 Humanlike Flow: Maintains natural, smooth conversation."
-  ],
-  roadmap: [
-    "Q4 2025: Flow Engine upgrade with multi-agent reasoning.",
-    "Q1 2026: Expanded developer ecosystem & API integrations.",
-    "Q2 2026: Multi-modal AI features (text, code, image).",
-    "Q3 2026: Enhanced cryptographic identity & PoAI updates.",
-    "Q4 2026: Agentic payments & autonomous workflow expansion."
-  ],
-  hidden: [
-    "Cryptographic Identity: Verifiable and secure AI actions.",
-    "Flow Nodes: Dynamic conversation pathways for advanced reasoning.",
-    "Proof of AI (PoAI): Demonstrates authenticity of AI outputs.",
-    "Agentic Payments: Execute stablecoin transactions automatically.",
-    "Modular Ecosystem: Works with multiple AI agents seamlessly."
-  ],
-  faq: [
-    "Q: How does Kite AI remember context?\nA: Through Context Persistence and compressed memory storage.",
-    "Q: What is the Flow Engine?\nA: A reasoning engine that dynamically optimizes conversation logic.",
-    "Q: Can Kite AI run code?\nA: Yes, Kite AI can execute code snippets and integrate results.",
-    "Q: How do I access hidden facts?\nA: Click the Hidden Facts button to discover advanced features.",
-    "Q: Is Kite AI decentralized?\nA: Yes, it’s modular and interoperable within a decentralized ecosystem."
-  ]
-};
+const quizQuestions = [
+  {q:"What feature allows Kite AI to remember conversation history?", options:["Flow Engine","Context Persistence","Agentic Payments","Hidden Facts"], answer:1},
+  {q:"Which engine optimizes reasoning dynamically?", options:["Flow Engine","Context Persistence","Code Integration","PoAI"], answer:0},
+  {q:"Which feature allows Kite AI to execute code?", options:["Agentic Payments","Code Integration","Flow Nodes","Hidden Facts"], answer:1},
+  {q:"Which feature executes autonomous transactions?", options:["Agentic Payments","Flow Engine","Context Persistence","PoAI"], answer:0},
+  {q:"Which of these is a hidden fact?", options:["Flow Engine","Cryptographic Identity","Code Integration","Roadmap"], answer:1},
+  {q:"PoAI stands for?", options:["Proof of AI","Process of AI","Persistence of AI","Programmed AI"], answer:0},
+  {q:"Which feature compresses context intelligently?", options:["Flow Engine","Context Persistence","Agentic Payments","Modular Ecosystem"], answer:1},
+  {q:"Which is part of Kite AI roadmap?", options:["Multi-modal AI","Flying Kite Feature","PoAI Expansion","Both A and C"], answer:3},
+  {q:"Kite AI maintains natural conversation using?", options:["Flow Engine","Hidden Facts","Humanlike Flow","Agentic Payments"], answer:2},
+  {q:"Which feature ensures modular and interoperable AI?", options:["Modular Ecosystem","Code Integration","Flow Nodes","Roadmap"], answer:0}
+];
+
+let currentQuestion = 0;
+let score = 0;
 
 function addMessage(sender,text){
   const msgDiv = document.createElement('div');
@@ -78,23 +61,56 @@ function addMessage(sender,text){
   messagesContainer.scrollTop = messagesContainer.scrollHeight;
 }
 
-function showInfo(category){
-  const items = infoDatabase[category];
-  items.forEach((item,i)=>{
-    setTimeout(()=>{
-      addMessage('kite', item);
-    }, i*600);
+function showQuizQuestion(){
+  messagesContainer.innerHTML = '';
+  const q = quizQuestions[currentQuestion];
+  addMessage('kite', `Question ${currentQuestion+1}: ${q.q}`);
+  q.options.forEach((opt,i)=>{
+    const btn = document.createElement('button');
+    btn.textContent = opt;
+    btn.classList.add('quiz-option');
+    btn.onclick = ()=>checkAnswer(i);
+    messagesContainer.appendChild(btn);
   });
+}
+
+function checkAnswer(selected){
+  const correct = quizQuestions[currentQuestion].answer;
+  if(selected === correct){
+    score++;
+    addMessage('kite', "✅ Correct!");
+  } else {
+    addMessage('kite', `❌ Wrong! Correct answer: ${quizQuestions[currentQuestion].options[correct]}`);
+  }
+  currentQuestion++;
+  setTimeout(()=>{
+    if(currentQuestion<quizQuestions.length){
+      showQuizQuestion();
+    } else {
+      addMessage('kite', `🏆 Quiz completed! Your score: ${score} / ${quizQuestions.length}`);
+      const replayBtn = document.createElement('button');
+      replayBtn.textContent = "Replay Quiz";
+      replayBtn.onclick = startQuiz;
+      replayBtn.style.marginTop="10px";
+      messagesContainer.appendChild(replayBtn);
+    }
+  },1000);
+}
+
+function startQuiz(){
+  currentQuestion=0;
+  score=0;
+  showQuizQuestion();
 }
 
 function replayChat(){
   messagesContainer.innerHTML = '';
-  addMessage('kite', 'Welcome back! Choose a topic to explore Kite AI features, roadmap, hidden facts, or FAQs.');
+  addMessage('kite', 'Hello! I am Kite AI 🪁. Explore my features, roadmap, hidden facts, and FAQs using the buttons.');
 }
 
-// Auto-start demo
+// Auto-start welcome message
 window.onload = () => {
-  addMessage('kite', 'Hello! I am Kite AI 🪁. Explore my features, roadmap, hidden facts, and FAQs using the buttons below.');
+  addMessage('kite', 'Welcome! Click "Start Quiz" to test your knowledge about Kite AI features, roadmap, hidden facts, and more.');
 };
 </script>
 </body>
