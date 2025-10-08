@@ -6,101 +6,125 @@
   <title>KiteAI Hub</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.3.3/dist/tailwind.min.css" rel="stylesheet">
   <style>
-    body { background: #f0f9ff; font-family: 'Arial', sans-serif; }
-    .leaderboard { max-height: 300px; overflow-y: auto; }
-    .quiz-option:hover { background-color: #dbeafe; cursor: pointer; }
+    body { font-family: 'Arial', sans-serif; scroll-behavior: smooth; }
+    .section { padding: 80px 20px; }
+    .quiz-option { cursor: pointer; transition: all 0.2s; }
+    .quiz-option:hover { transform: scale(1.05); }
   </style>
 </head>
 <body class="text-gray-800">
 
-  <!-- Header -->
-  <header class="bg-blue-500 text-white p-6 text-center">
-    <h1 class="text-3xl font-bold">Welcome to KiteAI Hub</h1>
-    <p class="mt-2">All about KiteAI, interact, quiz & leaderboard</p>
-  </header>
+  <!-- Navbar -->
+  <nav class="fixed top-0 left-0 w-full bg-white shadow z-50">
+    <div class="container mx-auto flex justify-between items-center py-4 px-6">
+      <div class="text-xl font-bold text-blue-600">KiteAI Hub</div>
+      <div class="space-x-4">
+        <a href="#about" class="text-gray-700 hover:text-blue-600">About</a>
+        <a href="#roadmap" class="text-gray-700 hover:text-blue-600">Roadmap</a>
+        <a href="#faq" class="text-gray-700 hover:text-blue-600">FAQ</a>
+        <a href="#quiz" class="text-gray-700 hover:text-blue-600">Quiz</a>
+        <a href="#leaderboard" class="text-gray-700 hover:text-blue-600">Leaderboard</a>
+        <a href="#share" class="text-gray-700 hover:text-blue-600">Share</a>
+      </div>
+    </div>
+  </nav>
 
   <!-- About Section -->
-  <section id="about" class="p-6">
-    <h2 class="text-2xl font-bold mb-4">About KiteAI</h2>
-    <p>KiteAI is an advanced AI assistant designed to help you with coding, learning, and productivity. Fast, reliable, and humanlike!</p>
+  <section id="about" class="section bg-gradient-to-r from-blue-400 to-blue-600 text-white">
+    <div class="container mx-auto max-w-4xl text-center">
+      <h2 class="text-4xl font-bold mb-4">About KiteAI</h2>
+      <p class="text-lg">KiteAI is a state-of-the-art AI assistant designed to help you code, learn, and manage projects efficiently. Fast, intelligent, and humanlike!</p>
+    </div>
   </section>
 
   <!-- Roadmap Section -->
-  <section id="roadmap" class="bg-blue-50 p-6">
-    <h2 class="text-2xl font-bold mb-4">Roadmap</h2>
-    <ul class="list-disc list-inside">
-      <li>Q1 2025: Launch basic AI assistant</li>
-      <li>Q2 2025: Add code integration & project support</li>
-      <li>Q3 2025: Mobile app & advanced reasoning features</li>
-      <li>Q4 2025: Community engagement & leaderboard system</li>
-    </ul>
+  <section id="roadmap" class="section bg-gradient-to-r from-purple-400 to-purple-600 text-white">
+    <div class="container mx-auto max-w-4xl">
+      <h2 class="text-4xl font-bold mb-6 text-center">Roadmap</h2>
+      <ul class="space-y-4 text-lg list-disc list-inside">
+        <li><strong>Q1 2025:</strong> Launch core AI assistant</li>
+        <li><strong>Q2 2025:</strong> Add code integration and project support</li>
+        <li><strong>Q3 2025:</strong> Mobile app & advanced reasoning features</li>
+        <li><strong>Q4 2025:</strong> Community engagement & leaderboard system</li>
+      </ul>
+    </div>
   </section>
 
   <!-- FAQ Section -->
-  <section id="faq" class="p-6">
-    <h2 class="text-2xl font-bold mb-4">FAQ</h2>
-    <details class="mb-2">
-      <summary class="cursor-pointer font-semibold">What is KiteAI?</summary>
-      <p>KiteAI is your smart AI companion to code, learn, and automate tasks efficiently.</p>
-    </details>
-    <details class="mb-2">
-      <summary class="cursor-pointer font-semibold">How can I interact with KiteAI?</summary>
-      <p>You can chat with KiteAI, use its code assistant, or participate in quizzes and leaderboards here!</p>
-    </details>
-    <details class="mb-2">
-      <summary class="cursor-pointer font-semibold">Is KiteAI free?</summary>
-      <p>Yes! Basic features are free. Premium features are coming soon.</p>
-    </details>
+  <section id="faq" class="section bg-gradient-to-r from-green-400 to-green-600 text-white">
+    <div class="container mx-auto max-w-4xl">
+      <h2 class="text-4xl font-bold mb-6 text-center">FAQ</h2>
+      <div class="space-y-4 text-lg">
+        <details class="bg-white text-gray-800 p-4 rounded shadow">
+          <summary class="cursor-pointer font-semibold">What is KiteAI?</summary>
+          <p class="mt-2">KiteAI is your smart AI companion to code, learn, and automate tasks efficiently.</p>
+        </details>
+        <details class="bg-white text-gray-800 p-4 rounded shadow">
+          <summary class="cursor-pointer font-semibold">How can I interact with KiteAI?</summary>
+          <p class="mt-2">You can chat with KiteAI, use its code assistant, or participate in quizzes and leaderboards here!</p>
+        </details>
+        <details class="bg-white text-gray-800 p-4 rounded shadow">
+          <summary class="cursor-pointer font-semibold">Is KiteAI free?</summary>
+          <p class="mt-2">Yes! Basic features are free. Premium features coming soon.</p>
+        </details>
+      </div>
+    </div>
   </section>
 
   <!-- Quiz Section -->
-  <section id="quiz" class="bg-blue-50 p-6">
-    <h2 class="text-2xl font-bold mb-4">Interactive Quiz</h2>
-    <div id="quiz-container" class="space-y-4">
-      <div class="quiz-question font-semibold">1. What is KiteAI mainly used for?</div>
-      <div class="quiz-options space-y-2">
-        <div class="quiz-option p-2 border rounded" onclick="answerQuiz(this, 'correct')">AI coding assistant</div>
-        <div class="quiz-option p-2 border rounded" onclick="answerQuiz(this, 'wrong')">Cooking recipes</div>
-        <div class="quiz-option p-2 border rounded" onclick="answerQuiz(this, 'wrong')">Music composition</div>
-        <div class="quiz-option p-2 border rounded" onclick="answerQuiz(this, 'wrong')">Travel guide</div>
+  <section id="quiz" class="section bg-gradient-to-r from-yellow-400 to-yellow-500 text-gray-900">
+    <div class="container mx-auto max-w-2xl text-center">
+      <h2 class="text-4xl font-bold mb-6">Interactive Quiz</h2>
+      <div id="quiz-container" class="space-y-6">
+        <div class="bg-white p-6 rounded shadow">
+          <div class="text-xl font-semibold mb-4">1. What is KiteAI mainly used for?</div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="quiz-option bg-blue-100 p-4 rounded" onclick="answerQuiz(this, true)">AI coding assistant</div>
+            <div class="quiz-option bg-red-100 p-4 rounded" onclick="answerQuiz(this, false)">Cooking recipes</div>
+            <div class="quiz-option bg-red-100 p-4 rounded" onclick="answerQuiz(this, false)">Music composition</div>
+            <div class="quiz-option bg-red-100 p-4 rounded" onclick="answerQuiz(this, false)">Travel guide</div>
+          </div>
+        </div>
       </div>
+      <div id="quiz-result" class="mt-4 text-xl font-bold"></div>
     </div>
-    <div id="quiz-result" class="mt-4 font-bold"></div>
   </section>
 
   <!-- Leaderboard Section -->
-  <section id="leaderboard" class="p-6">
-    <h2 class="text-2xl font-bold mb-4">Leaderboard</h2>
-    <div class="leaderboard border p-4 rounded bg-white">
-      <ol id="leaderboard-list" class="list-decimal list-inside">
-        <li>Alice - 120 pts</li>
-        <li>Bob - 100 pts</li>
-        <li>Charlie - 90 pts</li>
-      </ol>
+  <section id="leaderboard" class="section bg-gradient-to-r from-pink-400 to-pink-500 text-white">
+    <div class="container mx-auto max-w-2xl text-center">
+      <h2 class="text-4xl font-bold mb-6">Leaderboard</h2>
+      <div class="bg-white text-gray-800 rounded shadow p-4">
+        <ol id="leaderboard-list" class="list-decimal list-inside text-lg space-y-2">
+          <li>Alice - 120 pts</li>
+          <li>Bob - 100 pts</li>
+          <li>Charlie - 90 pts</li>
+        </ol>
+      </div>
     </div>
   </section>
 
   <!-- Share to X Section -->
-  <section id="share" class="bg-blue-50 p-6 text-center">
-    <h2 class="text-2xl font-bold mb-4">Share your KiteAI experience</h2>
-    <a id="share-x" href="https://twitter.com/intent/tweet?text=Check%20out%20KiteAI!%20%40GoKiteAI%20%23KiteAI" target="_blank" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Share on X</a>
+  <section id="share" class="section bg-gradient-to-r from-indigo-400 to-indigo-600 text-white text-center">
+    <h2 class="text-4xl font-bold mb-4">Share Your KiteAI Experience</h2>
+    <a id="share-x" href="https://twitter.com/intent/tweet?text=Check%20out%20KiteAI!%20%40GoKiteAI%20%23KiteAI" target="_blank" class="bg-white text-indigo-600 px-6 py-3 rounded-full font-semibold hover:bg-gray-200 transition">Share on X</a>
   </section>
 
   <!-- Footer -->
-  <footer class="bg-blue-500 text-white p-4 text-center">
+  <footer class="bg-gray-800 text-white p-4 text-center">
     &copy; 2025 KiteAI Hub | Built with ❤️
   </footer>
 
   <script>
-    function answerQuiz(element, status) {
+    function answerQuiz(element, correct) {
       const result = document.getElementById('quiz-result');
-      if(status === 'correct') {
+      if(correct) {
         result.innerHTML = "🎉 Correct Answer!";
-        element.style.backgroundColor = "#a7f3d0";
+        element.style.backgroundColor = "#22c55e";
         addLeaderboard('You', 50);
       } else {
         result.innerHTML = "❌ Wrong Answer. Try Again!";
-        element.style.backgroundColor = "#fecaca";
+        element.style.backgroundColor = "#ef4444";
       }
     }
 
@@ -112,4 +136,4 @@
     }
   </script>
 </body>
-</html>
+    </html>
