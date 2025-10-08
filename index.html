@@ -3,154 +3,185 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>KiteAI Hub - OG Showcase</title>
-<link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.3.3/dist/tailwind.min.css" rel="stylesheet">
+<title>Kite AI Hub 🪁</title>
 <style>
-  html { scroll-behavior: smooth; }
-  body { font-family: 'Inter', sans-serif; }
-  .section { padding: 100px 20px; }
-  .quiz-option { cursor: pointer; transition: all 0.3s; }
-  .quiz-option:hover { transform: scale(1.05); }
-  .accordion { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
-  .accordion.open { max-height: 200px; }
+    /* General Reset */
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Arial', sans-serif; }
+    body { background: linear-gradient(to bottom, #87CEEB, #ffffff); color: #333; }
+    a { text-decoration: none; color: inherit; }
+
+    /* Container */
+    .container { width: 90%; max-width: 1200px; margin: 0 auto; padding: 20px; }
+
+    /* Hero */
+    header { text-align: center; padding: 50px 20px; }
+    header h1 { font-size: 3em; color: #005f99; }
+    header p { font-size: 1.2em; margin-top: 10px; }
+
+    /* Kite Animation */
+    #kiteCanvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; }
+
+    /* Demo Section */
+    .demo { background: rgba(255,255,255,0.8); padding: 30px; border-radius: 15px; margin: 30px 0; text-align: center; }
+    .demo input, .demo button { padding: 10px; margin: 10px 5px; font-size: 1em; }
+    .demo-response { margin-top: 20px; font-weight: bold; }
+
+    /* Projects */
+    .projects { display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; margin: 40px 0; }
+    .card { background: white; border-radius: 10px; padding: 20px; width: 250px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); transition: transform 0.3s; }
+    .card:hover { transform: translateY(-5px); }
+    .card h3 { color: #005f99; margin-bottom: 10px; }
+
+    /* Quiz */
+    .quiz-section { background: rgba(255,255,255,0.9); padding: 30px; border-radius: 15px; margin: 40px 0; }
+    .quiz-question { margin-bottom: 10px; font-weight: bold; }
+    .quiz-options button { margin: 5px; padding: 10px 15px; border: none; border-radius: 5px; cursor: pointer; transition: 0.3s; }
+    .quiz-options button:hover { background: #87CEEB; color: white; }
+    .quiz-result { margin-top: 10px; font-weight: bold; }
+
+    /* Footer */
+    footer { text-align: center; padding: 30px 20px; color: #555; border-top: 1px solid #ccc; }
 </style>
 </head>
-<body class="text-gray-800">
+<body>
 
-<!-- Navbar -->
-<nav class="fixed top-0 w-full bg-white shadow z-50">
-  <div class="container mx-auto flex justify-between items-center py-4 px-6">
-    <div class="text-2xl font-bold text-blue-600">KiteAI Hub</div>
-    <div class="space-x-4">
-      <a href="#about" class="text-gray-700 hover:text-blue-600">About</a>
-      <a href="#roadmap" class="text-gray-700 hover:text-purple-600">Roadmap</a>
-      <a href="#faq" class="text-gray-700 hover:text-green-600">FAQ</a>
-      <a href="#quiz" class="text-gray-700 hover:text-yellow-600">Quiz</a>
-      <a href="#leaderboard" class="text-gray-700 hover:text-pink-600">Leaderboard</a>
-      <a href="#share" class="text-gray-700 hover:text-indigo-600">Share</a>
-    </div>
-  </div>
-</nav>
+<canvas id="kiteCanvas"></canvas>
 
-<!-- Hero Section -->
-<section class="section bg-gradient-to-r from-blue-500 to-blue-700 text-white text-center">
-  <h1 class="text-6xl font-bold mb-4">KiteAI Hub</h1>
-  <p class="text-2xl mb-6 max-w-3xl mx-auto">The ultimate AI assistant for coding, learning, and productivity. Smart, fast, and humanlike.</p>
-  <a href="#quiz" class="bg-white text-blue-700 font-semibold px-6 py-3 rounded-full hover:bg-gray-200 transition">Take the Quiz</a>
-</section>
+<div class="container">
+    <!-- Hero Section -->
+    <header>
+        <h1>Welcome to Kite AI Hub 🪁</h1>
+        <p>Explore Kite AI features, projects, and interactive quizzes!</p>
+    </header>
 
-<!-- About Section -->
-<section id="about" class="section bg-gradient-to-r from-indigo-400 to-indigo-600 text-white text-center">
-  <h2 class="text-5xl font-bold mb-4">About KiteAI</h2>
-  <p class="text-xl max-w-3xl mx-auto">KiteAI is your cutting-edge AI companion that helps you code smarter, automate tasks, and boost productivity. Engage with interactive features, quizzes, and community leaderboards.</p>
-</section>
+    <!-- Demo Section -->
+    <section class="demo">
+        <h2>Kite AI Interactive Demo</h2>
+        <input type="text" id="userInput" placeholder="Ask Kite AI something...">
+        <button onclick="kiteRespond()">Ask</button>
+        <div class="demo-response" id="demoResponse"></div>
+    </section>
 
-<!-- Roadmap Section -->
-<section id="roadmap" class="section bg-gradient-to-r from-purple-400 to-purple-600 text-white text-center">
-  <h2 class="text-4xl font-bold mb-8">Roadmap</h2>
-  <div class="grid md:grid-cols-2 gap-6 max-w-5xl mx-auto">
-    <div class="bg-white text-gray-800 rounded-xl shadow-lg p-6 hover:shadow-2xl transition">
-      <h3 class="text-2xl font-semibold mb-2">Q1 2025</h3>
-      <p>Launch core AI assistant with basic features.</p>
-    </div>
-    <div class="bg-white text-gray-800 rounded-xl shadow-lg p-6 hover:shadow-2xl transition">
-      <h3 class="text-2xl font-semibold mb-2">Q2 2025</h3>
-      <p>Integrate coding support and project tools.</p>
-    </div>
-    <div class="bg-white text-gray-800 rounded-xl shadow-lg p-6 hover:shadow-2xl transition">
-      <h3 class="text-2xl font-semibold mb-2">Q3 2025</h3>
-      <p>Mobile app launch and advanced reasoning features.</p>
-    </div>
-    <div class="bg-white text-gray-800 rounded-xl shadow-lg p-6 hover:shadow-2xl transition">
-      <h3 class="text-2xl font-semibold mb-2">Q4 2025</h3>
-      <p>Community engagement, leaderboard, and OG recognition system.</p>
-    </div>
-  </div>
-</section>
+    <!-- Projects Section -->
+    <section>
+        <h2 style="text-align:center; margin-bottom:20px;">My Kite AI Projects</h2>
+        <div class="projects">
+            <div class="card">
+                <h3>Code Autocomplete</h3>
+                <p>See Kite AI autocomplete your code snippets efficiently.</p>
+            </div>
+            <div class="card">
+                <h3>AI Prompt Playground</h3>
+                <p>Experiment with different prompts and AI responses.</p>
+            </div>
+            <div class="card">
+                <h3>Chat Example</h3>
+                <p>Simulate a humanlike chat with Kite AI assistant.</p>
+            </div>
+        </div>
+    </section>
 
-<!-- FAQ Section -->
-<section id="faq" class="section bg-gradient-to-r from-green-400 to-green-600 text-white text-center">
-  <h2 class="text-4xl font-bold mb-8">FAQ</h2>
-  <div class="max-w-3xl mx-auto space-y-4 text-left">
-    <div class="bg-white text-gray-800 rounded-xl shadow p-4 cursor-pointer" onclick="toggleAccordion(this)">
-      <div class="font-semibold">What is KiteAI?</div>
-      <div class="accordion mt-2">KiteAI is your smart AI assistant to help code, automate tasks, and learn efficiently.</div>
-    </div>
-    <div class="bg-white text-gray-800 rounded-xl shadow p-4 cursor-pointer" onclick="toggleAccordion(this)">
-      <div class="font-semibold">How can I interact with KiteAI?</div>
-      <div class="accordion mt-2">Chat with KiteAI, take quizzes, and participate in the leaderboard for recognition.</div>
-    </div>
-    <div class="bg-white text-gray-800 rounded-xl shadow p-4 cursor-pointer" onclick="toggleAccordion(this)">
-      <div class="font-semibold">Is KiteAI free?</div>
-      <div class="accordion mt-2">Yes! Basic features are free, premium features coming soon.</div>
-    </div>
-  </div>
-</section>
+    <!-- Quiz Section -->
+    <section class="quiz-section">
+        <h2 style="text-align:center; margin-bottom:20px;">Kite AI Quiz 🪁</h2>
+        <div id="quizContainer"></div>
+        <button onclick="nextQuiz()">Next Question</button>
+        <div class="quiz-result" id="quizResult"></div>
+    </section>
 
-<!-- Quiz Section -->
-<section id="quiz" class="section bg-gradient-to-r from-yellow-400 to-yellow-500 text-gray-900">
-  <div class="max-w-2xl mx-auto text-center">
-    <h2 class="text-4xl font-bold mb-6">Interactive Quiz</h2>
-    <div class="bg-white p-6 rounded-xl shadow-lg space-y-4">
-      <div class="text-xl font-semibold mb-4">1. What is KiteAI mainly used for?</div>
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div class="quiz-option bg-blue-100 p-4 rounded-xl" onclick="answerQuiz(this, true)">AI coding assistant</div>
-        <div class="quiz-option bg-red-100 p-4 rounded-xl" onclick="answerQuiz(this, false)">Cooking recipes</div>
-        <div class="quiz-option bg-red-100 p-4 rounded-xl" onclick="answerQuiz(this, false)">Music composition</div>
-        <div class="quiz-option bg-red-100 p-4 rounded-xl" onclick="answerQuiz(this, false)">Travel guide</div>
-      </div>
-    </div>
-    <div id="quiz-result" class="mt-4 text-xl font-bold"></div>
-  </div>
-</section>
-
-<!-- Leaderboard Section -->
-<section id="leaderboard" class="section bg-gradient-to-r from-pink-400 to-pink-500 text-white text-center">
-  <h2 class="text-4xl font-bold mb-6">Leaderboard</h2>
-  <div class="bg-white text-gray-800 rounded-xl shadow-lg p-6 max-w-md mx-auto">
-    <ol id="leaderboard-list" class="list-decimal list-inside text-lg space-y-2">
-      <li>Alice - 120 pts</li>
-      <li>Bob - 100 pts</li>
-      <li>Charlie - 90 pts</li>
-    </ol>
-  </div>
-</section>
-
-<!-- Share Section -->
-<section id="share" class="section bg-gradient-to-r from-indigo-400 to-indigo-600 text-white text-center">
-  <h2 class="text-4xl font-bold mb-4">Share Your KiteAI Experience</h2>
-  <a href="https://twitter.com/intent/tweet?text=Check%20out%20KiteAI!%20%40GoKiteAI%20%23KiteAI" target="_blank" class="bg-white text-indigo-600 font-semibold px-6 py-3 rounded-full hover:bg-gray-200 transition">Share on X</a>
-</section>
-
-<!-- Footer -->
-<footer class="bg-gray-900 text-white p-6 text-center">
-  &copy; 2025 KiteAI Hub | Built with ❤️
-</footer>
+    <!-- Footer -->
+    <footer>
+        Built with ❤️ by [Your Name] | Follow me on <a href="#">X/Twitter</a>
+    </footer>
+</div>
 
 <script>
-function answerQuiz(element, correct) {
-  const result = document.getElementById('quiz-result');
-  if(correct) {
-    result.innerHTML = "🎉 Correct Answer!";
-    element.style.backgroundColor = "#22c55e";
-    addLeaderboard('You', 50);
-  } else {
-    result.innerHTML = "❌ Wrong Answer. Try Again!";
-    element.style.backgroundColor = "#ef4444";
-  }
-}
+    // -------- Kite Animation ----------
+    const canvas = document.getElementById('kiteCanvas');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
 
-function addLeaderboard(name, points) {
-  const list = document.getElementById('leaderboard-list');
-  const newEntry = document.createElement('li');
-  newEntry.textContent = `${name} - ${points} pts`;
-  list.appendChild(newEntry);
-}
+    let kite = { x: 100, y: 100, dx: 2, dy: 1.5 };
 
-function toggleAccordion(el) {
-  const accordion = el.querySelector('.accordion');
-  accordion.classList.toggle('open');
-}
+    function drawKite() {
+        ctx.clearRect(0,0,canvas.width,canvas.height);
+        ctx.fillStyle = '#FF0000';
+        ctx.beginPath();
+        ctx.moveTo(kite.x, kite.y);
+        ctx.lineTo(kite.x+20, kite.y+30);
+        ctx.lineTo(kite.x-20, kite.y+30);
+        ctx.closePath();
+        ctx.fill();
+
+        kite.x += kite.dx;
+        kite.y += kite.dy;
+
+        if(kite.x > canvas.width || kite.x < 0) kite.dx *= -1;
+        if(kite.y > canvas.height/2 || kite.y < 0) kite.dy *= -1;
+
+        requestAnimationFrame(drawKite);
+    }
+    drawKite();
+
+    // -------- Kite AI Demo ----------
+    function kiteRespond() {
+        const input = document.getElementById('userInput').value;
+        const responseDiv = document.getElementById('demoResponse');
+        if(input.trim() === "") { responseDiv.textContent = "Please ask something."; return; }
+        // Example responses
+        const responses = [
+            "Interesting question! 🪁",
+            "Kite AI says: Let me think...",
+            "Here's a tip: Always test your code!",
+            "AI thinks that's awesome! 🚀",
+            "Kite AI predicts success!"
+        ];
+        responseDiv.textContent = responses[Math.floor(Math.random()*responses.length)];
+    }
+
+    // -------- Quiz Logic ----------
+    const quizzes = [
+        {q:"What does Kite AI specialize in?", a:["Music", "Coding & AI", "Cooking", "Travel"], correct:1},
+        {q:"Which language does Kite AI understand?", a:["Python & JS", "Only Python", "Only JS", "C++"], correct:0},
+        {q:"Kite AI can help you with?", a:["AI coding", "Painting", "Driving", "Gardening"], correct:0},
+        {q:"Who can use Kite AI?", a:["Everyone", "Only Devs", "Only Kids", "Only Experts"], correct:0},
+        {q:"What emoji represents Kite AI Hub?", a:["🪁", "🚗", "🎸", "🍕"], correct:0}
+    ];
+
+    let currentQuiz = 0;
+    function showQuiz() {
+        const container = document.getElementById('quizContainer');
+        const quiz = quizzes[currentQuiz];
+        container.innerHTML = `<div class="quiz-question">${quiz.q}</div>`;
+        let optionsHTML = '<div class="quiz-options">';
+        quiz.a.forEach((opt, idx) => {
+            optionsHTML += `<button onclick="checkAnswer(${idx})">${opt}</button>`;
+        });
+        optionsHTML += '</div>';
+        container.innerHTML += optionsHTML;
+        document.getElementById('quizResult').textContent = '';
+    }
+
+    function checkAnswer(idx) {
+        const result = document.getElementById('quizResult');
+        if(idx === quizzes[currentQuiz].correct) {
+            result.textContent = "✅ Correct!";
+            result.style.color = "green";
+        } else {
+            result.textContent = "❌ Wrong! Try next.";
+            result.style.color = "red";
+        }
+    }
+
+    function nextQuiz() {
+        currentQuiz = (currentQuiz + 1) % quizzes.length;
+        showQuiz();
+    }
+
+    // Initialize first quiz
+    showQuiz();
 </script>
+
 </body>
 </html>
